@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+sdk.dir=C:\\Users\\ws780\\AppData\\Local\\Android\\Sdk
+
