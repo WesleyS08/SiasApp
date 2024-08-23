@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Sias Mobile</string>
+    <!--=======================================Parte de textos do Onboardinng=========================================================-->
+    <string name="TituloOnboarding1"> Comunicação Direta</string>
+    <string name="DescricaoOnboarding1"> Conecte o RH diretamente aos candidatos , um app que facilita a
+    comunicação rápida e eficaz durante o processo seletivo.</string>
+    <string name="TituloOnboarding2"> Gerenciamento de Entrevistas</string>
+    <string name="DescricaoOnboarding2"> Agende entrevistas facilmente e visualize entrevistas anteriores, tudo em um só lugar.</string>
+    <string name="TituloOnboarding3"> Bot para as principais dúvidas </string>
+    <string name="DescricaoOnboarding3"> Tire suas principais dúvidas de forma fácil e rápida com o bot exclusivo para isso.</string>
+   <string name="inicio">Continuar</string>
+
+    <!--================================================================================================-->
 </resources>
