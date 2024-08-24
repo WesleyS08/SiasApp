@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/cor_foco</item>
+        <item name="hintTextColor">@color/cor_foco</item>
+        <item name="helperTextTextColor">@color/cor_foco</item>
+        <item name="errorTextColor">@color/cor_foco</item>
+    </style>
+
+
+
+</resources>

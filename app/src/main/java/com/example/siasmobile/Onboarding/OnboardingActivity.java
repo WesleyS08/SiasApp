@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.siasmobile.MainActivity;
 import com.example.siasmobile.Onboarding.Adapter.OnboardingPagerAdapter;
 import com.example.siasmobile.R;
+import com.example.siasmobile.mander.Login;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,7 @@ public class OnboardingActivity extends AppCompatActivity {
             editor.putBoolean("completed", true);
             editor.apply();
 
-            Intent intent = new Intent(OnboardingActivity.this, MainActivity.class);
+            Intent intent = new Intent(OnboardingActivity.this, Login.class);
             startActivity(intent);
             finish();
         });

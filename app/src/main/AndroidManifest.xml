@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SiasMobile"
         tools:targetApi="31">
+        <activity
+            android:name=".mander.Login"
+            android:exported="false" />
         <activity android:name=".Onboarding.OnboardingActivity" />
         <activity
             android:name=".MainActivity"

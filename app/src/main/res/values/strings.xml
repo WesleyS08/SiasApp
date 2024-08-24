@@ -8,7 +8,14 @@
     <string name="DescricaoOnboarding2"> Agende entrevistas facilmente e visualize entrevistas anteriores, tudo em um só lugar.</string>
     <string name="TituloOnboarding3"> Bot para as principais dúvidas </string>
     <string name="DescricaoOnboarding3"> Tire suas principais dúvidas de forma fácil e rápida com o bot exclusivo para isso.</string>
-   <string name="inicio">Continuar</string>
+    <string name="inicio">Continuar</string>
+
+    <!--================================================================================================-->
+
+    <!--=======================================Parte de textos do Login=========================================================-->
+    <string name="Titulo"> Comece Agora</string>
+    <string name="Descricao"> Crie uma conta ou faça login para explorar nosso aplicativo</string>
+
 
     <!--================================================================================================-->
 </resources>
