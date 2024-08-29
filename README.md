@@ -1,36 +1,57 @@
-# SIAS Mobile (Sistema de Inovação e Avanço Socioeconômico)
+# SIAS Mobile
 
-O SIAS Mobile é um aplicativo inovador projetado para otimizar a gestão de entrevistas realizadas pelo setor de Recursos Humanos (RH). Nosso foco é proporcionar facilidade e agilidade tanto para o RH quanto para os candidatos. O RH pode enviar solicitações detalhadas aos candidatos qualificados, incluindo informações como data, horário e local da entrevista. O candidato, por sua vez, pode acessar a aba de gerenciamento, onde pode aceitar ou recusar as solicitações recebidas de determinada empresa.
-## Tecnologias Utilizadas
+Este repositório é dedicado ao desenvolvimento do aplicativo **SIAS**.
 
-O desenvolvimento do SIAS Mobile envolve inúmeras tecnologias essenciais que garantem o funcionamento. Essas tecnologias incluem linguagens de orientação a objeto e estilo para construir a interface do usuário, bem como linguagens de programação e bancos de dados para gerenciar a lógica do servidor e o armazenamento de dados. Ferramentas adicionais são usadas para facilitar o desenvolvimento, teste e etc.
+Para garantir a eficiência e a clareza ao longo do projeto, adotamos uma abordagem colaborativa envolvendo todos os membros da equipe. Utilizamos a metodologia de arquitetura **C4** (Context, Containers, Components, and Code), que nos proporcionou uma estrutura robusta e bem-organizada. Essa abordagem ajudou a estruturar o desenvolvimento de forma coesa e a gerenciar o sistema de maneira eficaz.
 
-| Tecnologia    | Descrição                                                           | Uso no Projeto                                                |
-|---------------|---------------------------------------------------------------------|---------------------------------------------------------------|
-| **JAVA**     | Linguagem utilizada como principal ferramenta para desenvolvimento e gerenciamento.       | Criação de classes, métodos, objetos e conexão com APIs e banco de dados                         |
-| **XAMPP**     | Plataforma de servidor que inclui Apache, MySQL, PHP e Perl.        | Facilita o desenvolvimento mobile ao fornecer um ambiente de servidor completo. 
-| **MySQL**     | Sistema de gerenciamento de banco de dados relacional.              | Armazenamento estruturado de dados do sistema, como informações de usuários e resultados de testes.|
-| **Firebase** |Plataforma de desenvolvimento do Google, com diversas ferramentas e serviços abrangentes.       | Utilizado para documentar e gerar relatórios textuais relacionados ao projeto. |
-| **Microsoft Word** | Aplicativo de processamento de texto da Microsoft.            | Utilizado para documentar e gerar relatórios textuais relacionados ao projeto. |
-| **Figma**     | Ferramenta de design colaborativo para a criação de interfaces de usuário. | Utilizada para o design e prototipagem das interfaces do SIAS. |
+## Visão Geral
 
+O **SIAS** é projetado para otimizar a gestão de entrevistas realizadas pelo setor de Recursos Humanos. Nosso objetivo é proporcionar facilidade e agilidade tanto para o RH quanto para os candidatos.
 
+### Funcionalidades
 
-## APIs Integradas
+#### Para o RH
+- **Envio de Solicitações**: O RH pode enviar solicitações detalhadas para candidatos qualificados.
+- **Detalhes das Solicitações**: As solicitações incluem informações como data, horário e local da entrevista.
 
-Para oferecer funcionalidades avançadas e serviços adicionais, o SIAS Mobile integra várias APIs externas. Essas APIs fornecem suporte para autenticação e outros serviços que complementam a experiência do usuário e melhoram a eficiência do aplicativo.
+#### Para os Candidatos
+- **Gerenciamento de Solicitações**: Os candidatos podem acessar a aba de gerenciamento para visualizar e gerenciar as solicitações recebidas.
+- **Respostas**: Os candidatos podem aceitar ou recusar as solicitações recebidas de uma determinada empresa.
 
-| API                            | Descrição                                                         | Uso no Projeto                                               |
-|--------------------------------|-------------------------------------------------------------------|--------------------------------------------------------------|
-| **Google**                     | API que fornece serviços de autenticação e autorização.           | Permite login seguro e controle de acesso dentro do SIAS.    |
+### Benefícios
 
+- **Facilidade e Agilidade**: Facilita o processo de agendamento de entrevistas e a comunicação entre RH e candidatos.
+
+## Ferramentas Utilizadas
+
+O desenvolvimento do **SIAS Mobile** envolve várias ferramentas essenciais que garantem o funcionamento eficiente do aplicativo. As ferramentas incluem tecnologias para a interface do usuário, linguagens de programação e bancos de dados para gerenciar a lógica do servidor e o armazenamento de dados, além de ferramentas adicionais para desenvolvimento e testes.
+
+| Ferramenta             | Descrição                                                         | Uso no Projeto                                                 |
+|------------------------|-------------------------------------------------------------------|----------------------------------------------------------------|
+| **Firebase**           | Plataforma de desenvolvimento do Google com diversas ferramentas e serviços. | Utilizado para autenticação e gerenciamento de dados em tempo real. |
+| **Microsoft Word**     | Aplicativo de processamento de texto da Microsoft.                | Utilizado para documentação e geração de relatórios textuais.  |
+| **Figma**              | Ferramenta de design colaborativo para criação de interfaces de usuário. | Utilizada para design e prototipagem das interfaces do SIAS.    |
+| **Android Studio**     | Ambiente de desenvolvimento integrado (IDE) para Android.        | Utilizado para desenvolvimento e testes do aplicativo Android. |
+| **Trello**             | Ferramenta de gestão de projetos e tarefas.                       | Utilizada para organização e acompanhamento do progresso do projeto. |
+
+## Tecnologias Fundamentais
+
+O **SIAS Mobile** integra várias tecnologias e APIs externas para oferecer funcionalidades avançadas e serviços adicionais que melhoram a experiência do usuário e a eficiência do aplicativo.
+
+| Tecnologia              | Descrição                                                        | Uso no Projeto                                                 |
+|-------------------------|------------------------------------------------------------------|----------------------------------------------------------------|
+| **JAVA**                | Linguagem de programação para desenvolvimento Android.           | Utilizada para a lógica de negócios e implementação de funcionalidades. |
+| **Google Calendar API** | API para integração com o Google Calendar.                       | Utilizada para gerenciamento e sincronização de eventos no calendário. |
+| **Supabase**            | Plataforma de backend como serviço com banco de dados e autenticação. | Utilizada para armazenamento de dados e autenticação de usuários. |
+| **ChatBot**             | API para integração com chatbots e serviços de mensagem.          | Utilizada para suporte e interação com os usuários através de chatbots. |
 
 ## Equipe de Desenvolvimento
 
-Este projeto está sendo desenvolvido por uma equipe dedicada de estudantes da faculdade, FATEC Zona Sul. Cada membro desempenha um papel crucial no desenvolvimento e contribui para o sucesso do SIAS.
+O projeto **SIAS Mobile** está sendo desenvolvido por uma equipe dedicada de estudantes da faculdade FATEC Zona Sul. Cada membro desempenha um papel crucial no desenvolvimento e contribui para o sucesso do projeto.
 
-- **[DAVI DE BRITO JUNIOR:](https://github.com/DaveBrito)** Lider,Desenvolvedor FullStack
-- **[ERIC PENERES CARNEIRO:](https://github.com/EricW900)** Desenvolvedor FullStack
-- **[PEDRO BORGES DE JESUS:](https://github.com/B0rga)** Desenvolvedor FullStack
-- **[JEFFERSON MOREIRA EVANGELISTA:](https://github.com/JeffersonEvangelista)** Desenvolvedor FullStack
-- **[WESLEY SILVA DOS SANTOS:](https://github.com/WesleyS08)** Lider,Desenvolvedor FullStack
+- **[Davi de Brito Junior](https://github.com/DaveBrito)** - Líder, Desenvolvedor Full-Stack
+- **[Eric Peneres Carneiro](https://github.com/EricW900)** - Desenvolvedor Full-Stack
+- **[Pedro Borges de Jesus](https://github.com/B0rga)** - Desenvolvedor Full-Stack
+- **[Jefferson Moreira Evangelista](https://github.com/JeffersonEvangelista)** - Desenvolvedor Full-Stack
+- **[Wesley Silva dos Santos](https://github.com/WesleyS08)** - Líder, Desenvolvedor Full-Stack
+
