@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sias Mobile</string>
+    <string name="app_name">SIAS</string>
     <!--=======================================Parte de textos do Onboardinng=========================================================-->
     <string name="TituloOnboarding1"> Comunicação Direta</string>
     <string name="DescricaoOnboarding1"> Conecte o RH diretamente aos candidatos , um app que facilita a

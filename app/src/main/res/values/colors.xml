@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="laranjaPrincipal">#F07A26</color>
+    <color name="laranjaFoco">#9B480D</color>
     <color name="Cordefundo">#0D0D1B</color>
     <color name="cinza">#acb5bb</color>
     <color name="cor_foco">#F07A26</color>

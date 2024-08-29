@@ -52,6 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <!-- comece agora -->
     <TextView
         android:id="@+id/comece"
@@ -66,6 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Subtítulo -->
     <TextView
         android:id="@+id/subtitulo"
@@ -100,29 +102,37 @@
             android:background="@android:color/transparent"
         >
 
-        <Button
-            android:id="@+id/my_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="2dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
-            android:text="Login"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/other_textview1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_background"
+                android:text="Login"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="true"/>
 
-        <Button
-            android:id="@+id/other_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_background2"
-            android:text="Cadastro"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/other_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_background2"
+                android:text="Cadastro"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="true"/>
 
     </LinearLayout>
         <!-- Email -->
@@ -165,6 +175,7 @@
                 android:textColor="@color/black"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <!-- Lembrar de Mim -->
         <CheckBox
             android:id="@+id/rememberMeCheckBox"
@@ -184,18 +195,22 @@
             android:layout_marginTop="252dp"
             android:layout_marginEnd="16dp"
             android:layout_gravity="end"
-            android:text="Esqueceu a senha"
+            android:text="Esqueceu a senha ?"
             android:textColor="@color/cor_foco"
             android:textStyle="bold"
             android:clickable="true"
             android:focusable="true" />
 
         <!-- Botão Login -->
-        <Button
+        <TextView
             android:id="@+id/Login"
             android:layout_width="276dp"
             android:layout_height="wrap_content"
             android:text="Login"
+            android:background="@drawable/button_login"
+            android:textSize="18sp"
+            android:padding="7dp"
+            android:textAlignment="center"
             android:layout_marginLeft="55dp"
             android:layout_marginTop="310dp"
             android:textColor="@android:color/white"
