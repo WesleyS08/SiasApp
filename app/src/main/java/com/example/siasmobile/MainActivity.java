@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            setContentView(R.layout.activity_login);
+            setContentView(R.layout.activity_cadastro);
         }
     }
 }

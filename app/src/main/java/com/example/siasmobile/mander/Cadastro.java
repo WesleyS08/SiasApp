@@ -7,12 +7,13 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.siasmobile.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class Login extends AppCompatActivity {
+public class Cadastro extends AppCompatActivity {
 
     // Definição dos elementos do layout
     private TextInputEditText passwordEditText;
@@ -22,7 +23,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_cadastro);
 
         // Oculta a barra de navegação assim que a atividade é criada
         hideNavigationBar();
@@ -39,17 +40,16 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        // Botão para ir a tela de cadastro
-        TextView cadastroTextView = findViewById(R.id.other_textview);
-        cadastroTextView.setOnClickListener(new View.OnClickListener() {
+        // Botão para ir a tela de login
+        TextView loginTextView = findViewById(R.id.other_textview1);
+        loginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navegar para a tela de Cadastro
-                Intent intent = new Intent(Login.this, Cadastro.class);
+                // Navegar para a tela de Login
+                Intent intent = new Intent(Cadastro.this, Login.class);
                 startActivity(intent);
             }
         });
-
     }
 
     private void togglePasswordVisibility() {
@@ -81,7 +81,5 @@ public class Login extends AppCompatActivity {
             hideNavigationBar();
         }
     }
-
-
 
 }
