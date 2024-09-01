@@ -8,5 +8,6 @@
     <color name="cinza">#acb5bb</color>
     <color name="cor_foco">#F07A26</color>
     <color name="cor_texto">#212121</color>
-
+    <color name="color_red">#FF0000</color>
+    <color name="color_green">#00FF00</color>
 </resources>

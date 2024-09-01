@@ -1,5 +1,6 @@
 package com.example.siasmobile.Onboarding;
 
+
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,10 +16,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.siasmobile.MainActivity;
-import com.example.siasmobile.Onboarding.Adapter.OnboardingPagerAdapter;
 import com.example.siasmobile.R;
 import com.example.siasmobile.mander.Login;
+import com.example.siasmobile.Onboarding.Adapter.OnboardingPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class OnboardingActivity extends AppCompatActivity {
     private OnboardingPagerAdapter onboardingPagerAdapter;
     private Button btnFinishOnboarding;
     private TextView[] steps;
+    private ValueAnimator currentBackgroundAnimator;
+    private ValueAnimator currentTextAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,17 +79,22 @@ public class OnboardingActivity extends AppCompatActivity {
         });
 
         btnFinishOnboarding.setOnClickListener(v -> {
+            Log.d("OnboardingActivity", "Botão Continuar clicado");
+            // Marca o onboarding como concluído
             SharedPreferences sharedPref = getSharedPreferences("onboarding", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("completed", true);
             editor.apply();
 
+            // Redireciona para a tela de login
             Intent intent = new Intent(OnboardingActivity.this, Login.class);
             startActivity(intent);
-            finish();
+            finish(); // Finaliza a OnboardingActivity para não voltar a ela com o botão de voltar
         });
+
     }
-    //======================================================= Parte que oculta os btn e a navbar do celular =================================================
+
+    // Parte que oculta os botões e a navbar do celular
     private void hideSystemUI() {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -102,10 +110,8 @@ public class OnboardingActivity extends AppCompatActivity {
             hideSystemUI();
         }
     }
-    //===========================================================================================================================================
 
-    //===================================================================Reserta as cores do progress bar========================================================================
-
+    // Reseta as cores do progress bar
     private void resetStepStates() {
         for (TextView step : steps) {
             setStepBackground(step, R.color.white);
@@ -122,28 +128,44 @@ public class OnboardingActivity extends AppCompatActivity {
             step.setBackgroundColor(getResources().getColor(color));
         }
     }
-    //===========================================================================================================================================
 
-
-    //==============================================================================Animacao  para ficar bonitinho=============================================================
+    // Animação para as transições
     private void animateStepTransition(TextView activeStep) {
+        Drawable background = activeStep.getBackground();
 
-        GradientDrawable backgroundDrawable = (GradientDrawable) activeStep.getBackground();
-        int colorFrom = getResources().getColor(R.color.white);
-        int colorTo = getResources().getColor(R.color.laranjaPrincipal);
+        // Cancela animações anteriores para evitar sobreposição
+        if (currentBackgroundAnimator != null && currentBackgroundAnimator.isRunning()) {
+            currentBackgroundAnimator.cancel();
+        }
+        if (currentTextAnimator != null && currentTextAnimator.isRunning()) {
+            currentTextAnimator.cancel();
+        }
 
-        ValueAnimator backgroundColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        backgroundColorAnimator.setDuration(300);
-        backgroundColorAnimator.addUpdateListener(animator -> backgroundDrawable.setColor((int) animator.getAnimatedValue()));
-        backgroundColorAnimator.start();
+        if (background instanceof GradientDrawable) {
+            GradientDrawable backgroundDrawable = (GradientDrawable) background;
+            int colorFrom = getResources().getColor(R.color.white);
+            int colorTo = getResources().getColor(R.color.laranjaPrincipal);
 
-        // Animação da cor do texto da etapa ativa
-        int textColorFrom = getResources().getColor(R.color.laranjaPrincipal);
-        int textColorTo = getResources().getColor(android.R.color.white);
+            currentBackgroundAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            currentBackgroundAnimator.setDuration(300);
+            currentBackgroundAnimator.addUpdateListener(animator -> backgroundDrawable.setColor((int) animator.getAnimatedValue()));
 
-        ValueAnimator textColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), textColorFrom, textColorTo);
-        textColorAnimator.setDuration(500);
-        textColorAnimator.addUpdateListener(animator -> activeStep.setTextColor((int) animator.getAnimatedValue()));
-        textColorAnimator.start();
+            // Animação da cor do texto da etapa ativa
+            int textColorFrom = getResources().getColor(R.color.laranjaPrincipal);
+            int textColorTo = getResources().getColor(android.R.color.white);
+
+            currentTextAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), textColorFrom, textColorTo);
+            currentTextAnimator.setDuration(500);
+            currentTextAnimator.addUpdateListener(animator -> {
+                activeStep.setTextColor((int) animator.getAnimatedValue());
+                activeStep.invalidate(); // Força o redesenho
+            });
+
+            currentBackgroundAnimator.start();
+            currentTextAnimator.start();
+        } else {
+            activeStep.setBackgroundColor(getResources().getColor(R.color.laranjaPrincipal));
+            activeStep.setTextColor(getResources().getColor(android.R.color.white));
+        }
     }
 }

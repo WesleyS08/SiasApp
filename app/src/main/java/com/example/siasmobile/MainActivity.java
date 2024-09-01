@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.siasmobile.Onboarding.OnboardingActivity;
+import com.example.siasmobile.mander.Controller;
+import com.example.siasmobile.mander.Login;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,17 +16,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Verifica no SharedPreferences se o onboarding já foi completado
+        // Verifica se o onboarding foi concluído
         SharedPreferences sharedPref = getSharedPreferences("onboarding", MODE_PRIVATE);
         boolean onboardingCompleted = sharedPref.getBoolean("completed", false);
 
-        if (!onboardingCompleted) {
-            // Se o onboarding não foi completado, redireciona para a OnboardingActivity
-            Intent intent = new Intent(this, OnboardingActivity.class);
+        if (onboardingCompleted) {
+            Intent intent = new Intent(MainActivity.this, Controller.class);
             startActivity(intent);
             finish();
         } else {
-            setContentView(R.layout.activity_cadastro);
+            // Caso contrário, redireciona para a tela de onboarding
+            Intent intent = new Intent(MainActivity.this, OnboardingActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
