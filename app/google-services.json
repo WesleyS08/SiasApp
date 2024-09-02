@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871110692356",
+    "project_id": "siasmobile-72225",
+    "storage_bucket": "siasmobile-72225.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871110692356:android:f69bae36958559b88a2f51",
+        "android_client_info": {
+          "package_name": "com.example.siasmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcijc_gY5EUZrixA1etx-cJoaqvHh4YWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

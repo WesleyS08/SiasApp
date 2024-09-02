@@ -1,9 +1,5 @@
-<!-- res/drawable/button_background.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/laranjaPrincipal" />
-    <corners
-        android:bottomLeftRadius="16dp"
-        android:bottomRightRadius="16dp"
-        android:topLeftRadius="16dp"
-        android:topRightRadius="16dp" />
-</shape>
+<!-- res/drawable/button_cadastro.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:drawable="@drawable/button_enabled"/>
+    <item android:state_enabled="false" android:drawable="@drawable/button_disabled"/>
+</selector>

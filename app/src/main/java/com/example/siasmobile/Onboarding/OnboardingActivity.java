@@ -1,6 +1,5 @@
 package com.example.siasmobile.Onboarding;
 
-
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
@@ -17,14 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.siasmobile.R;
-import com.example.siasmobile.mander.Login;
 import com.example.siasmobile.Onboarding.Adapter.OnboardingPagerAdapter;
+import com.example.siasmobile.mander.Login;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OnboardingActivity extends AppCompatActivity {
 
+    private static final String TAG = "OnboardingActivity"; // Tag para logs
     private ViewPager viewPager;
     private OnboardingPagerAdapter onboardingPagerAdapter;
     private Button btnFinishOnboarding;
@@ -36,6 +36,7 @@ public class OnboardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
+        Log.d(TAG, "OnboardingActivity criada");
 
         viewPager = findViewById(R.id.viewPager);
         btnFinishOnboarding = findViewById(R.id.btnFinishOnboarding);
@@ -55,6 +56,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         onboardingPagerAdapter = new OnboardingPagerAdapter(this, layouts);
         viewPager.setAdapter(onboardingPagerAdapter);
+        Log.d(TAG, "OnboardingPagerAdapter configurado");
 
         // Configura o modo tela cheia
         hideSystemUI();
@@ -66,6 +68,7 @@ public class OnboardingActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                Log.d(TAG, "Página selecionada: " + position);
                 btnFinishOnboarding.setVisibility(position == layouts.size() - 1 ? View.VISIBLE : View.GONE);
 
                 // Reseta o estado das etapas
@@ -73,18 +76,20 @@ public class OnboardingActivity extends AppCompatActivity {
 
                 // Atualiza a visibilidade dos ícones de checagem e anima o progresso
                 if (position < steps.length) {
+                    Log.d(TAG, "Animação da etapa ativa: " + position);
                     animateStepTransition(steps[position]);
                 }
             }
         });
 
         btnFinishOnboarding.setOnClickListener(v -> {
-            Log.d("OnboardingActivity", "Botão Continuar clicado");
+            Log.d(TAG, "Botão Continuar clicado");
             // Marca o onboarding como concluído
             SharedPreferences sharedPref = getSharedPreferences("onboarding", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("completed", true);
             editor.apply();
+            Log.d(TAG, "Onboarding marcado como concluído");
 
             // Redireciona para a tela de login
             Intent intent = new Intent(OnboardingActivity.this, Login.class);
@@ -101,6 +106,7 @@ public class OnboardingActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
+        Log.d(TAG, "Sistema UI oculto");
     }
 
     @Override
@@ -113,6 +119,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
     // Reseta as cores do progress bar
     private void resetStepStates() {
+        Log.d(TAG, "Resetando estados das etapas");
         for (TextView step : steps) {
             setStepBackground(step, R.color.white);
             step.setTextColor(getResources().getColor(R.color.laranjaPrincipal));
@@ -120,6 +127,7 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void setStepBackground(TextView step, int color) {
+        Log.d(TAG, "Definindo fundo da etapa para a cor: " + color);
         Drawable background = step.getBackground();
         if (background instanceof GradientDrawable) {
             GradientDrawable backgroundDrawable = (GradientDrawable) background;
@@ -131,13 +139,16 @@ public class OnboardingActivity extends AppCompatActivity {
 
     // Animação para as transições
     private void animateStepTransition(TextView activeStep) {
+        Log.d(TAG, "Iniciando animação de transição para: " + activeStep.getText());
         Drawable background = activeStep.getBackground();
 
         // Cancela animações anteriores para evitar sobreposição
         if (currentBackgroundAnimator != null && currentBackgroundAnimator.isRunning()) {
+            Log.d(TAG, "Cancelando animação de fundo anterior");
             currentBackgroundAnimator.cancel();
         }
         if (currentTextAnimator != null && currentTextAnimator.isRunning()) {
+            Log.d(TAG, "Cancelando animação de texto anterior");
             currentTextAnimator.cancel();
         }
 

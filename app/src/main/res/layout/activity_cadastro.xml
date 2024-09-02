@@ -6,30 +6,104 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Cordefundo"
-    tools:context=".mander.Cadastro">
+    tools:context=".mander.Cadastro"
+    android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <FrameLayout
-            android:id="@+id/infos"
+            android:id="@+id/frameLayout"
+            android:layout_width="420dp"
+            android:layout_height="407dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="417dp"
+                android:layout_height="437dp"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/minhaImagem"
+                android:layout_width="55px"
+                android:layout_height="55px"
+                android:layout_marginLeft="30px"
+                android:layout_marginTop="50px"
+                android:background="@drawable/round_image"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sias" />
+
+            <!-- Título sias-->
+            <TextView
+                android:id="@+id/Titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/intersemibold"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
+
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/comece"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/intersemibold"
+            android:text="@string/TituloCadastro"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:layout_marginTop="125px"
+            android:layout_marginLeft="-25px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Subtítulo -->
+        <TextView
+            android:id="@+id/subtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/intersemibold"
+            android:text="@string/DescricaoCadastro"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:layout_marginTop="210px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/transition_container"
             android:layout_width="382dp"
-            android:layout_height="650dp"
+            android:layout_height="800dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/background_rounded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/subtitulo">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:orientation="horizontal"
-                android:padding="8dp"
-                android:background="@android:color/transparent">
+                android:padding="8dp">
 
                 <TextView
                     android:id="@+id/other_textview1"
@@ -40,12 +114,12 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_background3"
-                    android:text="Login"
-                    android:textColor="@android:color/white"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="12dp"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:text="Login"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/other_textview"
@@ -56,40 +130,41 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_background4"
-                    android:text="Cadastro"
-                    android:textColor="@android:color/white"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:padding="12dp"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:text="Cadastro"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <!-- Nome de Usuário -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="95dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="95dp"
                 android:layout_marginEnd="16dp"
-                app:hintTextColor="@color/cor_foco"
+                android:hint="Nome Completo"
                 app:boxStrokeColor="@color/cor_foco"
-                android:hint="Nome Completo">
+                app:hintTextColor="@color/cor_foco">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_person"
                     android:inputType="text"
-                    android:drawableStart="@drawable/ic_person" />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="180dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp">
+                android:layout_marginTop="180dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
 
                 <!-- Campo de Texto -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -97,16 +172,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:hintTextColor="@color/cor_foco"
+                    android:hint="Identificador"
                     app:boxStrokeColor="@color/cor_foco"
-                    android:hint="Identificador">
+                    app:hintTextColor="@color/cor_foco">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/identificadorEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Ícone de Informação -->
@@ -115,74 +190,75 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_info"
-                    android:contentDescription="Informações sobre identificador"
                     android:clickable="true"
+                    android:contentDescription="Informações sobre identificador"
                     android:focusable="true"
+                    android:src="@drawable/ic_info"
                     android:tooltipText="Caso seja de RH digite um CNPJ caso o contario um CPF." />
             </LinearLayout>
 
             <!-- Email -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="260dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="260dp"
                 android:layout_marginEnd="16dp"
-                app:hintTextColor="@color/cor_foco"
+                android:hint="Email"
                 app:boxStrokeColor="@color/cor_foco"
-                android:hint="Email">
+                app:hintTextColor="@color/cor_foco">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:drawableStart="@drawable/ic_email"
                     android:inputType="text"
-                    android:drawableStart="@drawable/ic_email" />
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Senha -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordInputLayout"
+                android:id="@+id/input_senha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="340dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="340dp"
                 android:layout_marginEnd="16dp"
-                app:hintTextColor="@color/cor_foco"
-                app:boxStrokeColor="@color/cor_foco"
                 android:hint="Senha"
-                app:endIconMode="password_toggle">
+                app:boxStrokeColor="@color/cor_foco"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="@color/cor_foco">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <!-- Confirmar a  Senha -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/senha2"
+                android:id="@+id/input_confirm_senha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="420dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="420dp"
                 android:layout_marginEnd="16dp"
-                app:hintTextColor="@color/cor_foco"
-                app:boxStrokeColor="@color/cor_foco"
                 android:hint="Confirmar a Senha"
-                app:endIconMode="password_toggle">
+                app:boxStrokeColor="@color/cor_foco"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="@color/cor_foco">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:id="@+id/termsTextView"
                 android:layout_width="326dp"
@@ -191,26 +267,35 @@
                 android:layout_marginTop="485dp"
                 android:background="@android:color/white"
                 android:padding="2dp"
-                android:text="Ao continuar, você concorda com os termos"
+                android:text="Ao continuar, você concorda com os"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="16sp" />
-            <!-- Botão de Continuar -->
+
             <TextView
-                android:id="@+id/Login"
-                android:layout_width="276dp"
+                android:id="@+id/termos"
+                android:layout_width="326dp"
                 android:layout_height="wrap_content"
-                android:text="Continuar"
-                android:background="@drawable/button_cadastro"
-                android:textSize="18sp"
-                android:padding="7dp"
-                android:textAlignment="center"
-                android:layout_marginLeft="55dp"
+                android:layout_marginLeft="290dp"
+                android:layout_marginTop="485dp"
+                android:background="@android:color/white"
+                android:padding="2dp"
+                android:text=" termos"
+                android:textColor="#FF3F51B5"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/Entrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="515dp"
-                android:textColor="@android:color/white"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/divider"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/laranjaPrincipal"
+                android:padding="7dp"
+                android:text="Continuar"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
             <!-- Linha com "ou" -->
             <View
@@ -230,17 +315,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="170dp"
                 android:layout_marginTop="560dp"
                 android:background="@android:color/white"
-                android:text="OU"
                 android:padding="2dp"
-                android:layout_marginLeft="170dp"
+                android:text="OU"
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintBottom_toTopOf="@+id/googleButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Login"/>
+                app:layout_constraintTop_toBottomOf="@+id/Login" />
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/cadastro"

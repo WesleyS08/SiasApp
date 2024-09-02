@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.siasmobile.Onboarding.OnboardingActivity;
-import com.example.siasmobile.mander.Controller;
 import com.example.siasmobile.mander.Login;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         boolean onboardingCompleted = sharedPref.getBoolean("completed", false);
 
         if (onboardingCompleted) {
-            Intent intent = new Intent(MainActivity.this, Controller.class);
+            Intent intent = new Intent(MainActivity.this, Login.class);
             startActivity(intent);
             finish();
         } else {

@@ -6,8 +6,9 @@
     <color name="laranjaFoco">#9B480D</color>
     <color name="Cordefundo">#0D0D1B</color>
     <color name="cinza">#acb5bb</color>
+    <color name="cor_inativa">#acb5bb</color>
     <color name="cor_foco">#F07A26</color>
     <color name="cor_texto">#212121</color>
-    <color name="color_red">#FF0000</color>
+    <color name="error_color">#FF0000</color>
     <color name="color_green">#00FF00</color>
 </resources>

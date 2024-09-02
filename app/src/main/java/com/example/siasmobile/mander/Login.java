@@ -6,13 +6,12 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.TextView;
-
-import com.example.siasmobile.R;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import com.example.siasmobile.R;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Login extends AppCompatActivity {
 
@@ -28,11 +27,14 @@ public class Login extends AppCompatActivity {
         // Inicialização dos elementos do layout
         passwordEditText = findViewById(R.id.passwordEditText);
         passwordInputLayout = findViewById(R.id.passwordInputLayout);
+        SignInButton signInButton = findViewById(R.id.signInButton);
+        TextView cadastroTextView = findViewById(R.id.other_textview); // Cadastro TextView
+
+        // Configura o esquema de cores do botão do Google
+        signInButton.setColorScheme(SignInButton.COLOR_DARK);
 
         // Configura o ícone de visibilidade da senha
         setupInitialPasswordVisibility();
-
-        // Configura o ícone de visibilidade da senha
         passwordInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,16 +42,15 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        // Botão para ir a tela de cadastro
-        TextView cadastroTextView = findViewById(R.id.other_textview);
+        // Configura o clique para navegar para a página de Cadastro
         cadastroTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navegar para a tela de Cadastro
                 Intent intent = new Intent(Login.this, Cadastro.class);
                 startActivity(intent);
             }
         });
+
     }
 
     private void setupInitialPasswordVisibility() {
