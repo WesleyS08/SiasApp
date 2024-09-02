@@ -28,7 +28,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Cadastro extends AppCompatActivity {
@@ -51,6 +55,7 @@ public class Cadastro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore banco = FirebaseFirestore.getInstance();
 
         // "Variáveis" do código
         TextInputLayout nomeLayout = findViewById(R.id.input_nome);
@@ -141,16 +146,36 @@ public class Cadastro extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 if (user != null) {
                                     sendEmailVerification(user);
+                                    // Salva os dados do usuário no Firestore
+
+                                    Map<String, Object> userData = new HashMap<>();
+                                    userData.put("nome", nome);
+                                    userData.put("email", email);
+                                    userData.put("identificador", identificadorTexto);
+
+                                    banco.collection("usuarios")
+                                            .document(user.getUid())
+                                            .set(userData)
+                                            .addOnSuccessListener(aVoid -> {
+                                                Log.d("CadastroActivity", "Dados do usuário salvos com sucesso");
+                                                Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
+                                                snackbar.setBackgroundTint(Color.WHITE);
+                                                snackbar.setTextColor(Color.BLACK);
+                                                snackbar.show();
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Log.e("CadastroActivity", "Erro ao salvar dados do usuário", e);
+                                                Snackbar snackbar = Snackbar.make(v, "Erro ao salvar os dados do usuário", Snackbar.LENGTH_SHORT);
+                                                snackbar.setBackgroundTint(Color.WHITE);
+                                                snackbar.setTextColor(Color.BLACK);
+                                                snackbar.show();
+                                            });
+
+                                    sendNotification("Cadastro concluído", "Você foi registrado com sucesso!");
+                                    Intent intent = new Intent(Cadastro.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
-                                Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
-                                snackbar.setBackgroundTint(Color.WHITE);
-                                snackbar.setTextColor(Color.BLACK);
-                                snackbar.show();
-                                // Envia a notificação tem que mudar a frase
-                                sendNotification("Cadastro concluído", "Você foi registrado com sucesso!");
-                                Intent intent = new Intent(Cadastro.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
                             } else {
                                 String erro;
                                 try {

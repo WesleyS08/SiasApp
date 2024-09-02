@@ -12,6 +12,7 @@ navigationUi = "2.6.0"
 firebaseAuth = "23.0.0"
 firebaseMessaging = "24.0.1"
 volley = "1.2.1"
+firebaseFirestore = "25.1.0"
 
 [libraries]
 google-material = { module = "com.google.android.material:material" }
@@ -28,6 +29,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 play-services-auth = { module = "com.google.android.gms:play-services-auth" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
