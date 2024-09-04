@@ -1,11 +1,8 @@
 package com.example.siasmobile.mander;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,8 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-
+import com.example.siasmobile.Notificacao.NotificationUtils;
 import com.example.siasmobile.MainActivity;
 import com.example.siasmobile.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -146,32 +141,10 @@ public class Cadastro extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 if (user != null) {
                                     sendEmailVerification(user);
+
                                     // Salva os dados do usuário no Firestore
-
-                                    Map<String, Object> userData = new HashMap<>();
-                                    userData.put("nome", nome);
-                                    userData.put("email", email);
-                                    userData.put("identificador", identificadorTexto);
-
-                                    banco.collection("usuarios")
-                                            .document(user.getUid())
-                                            .set(userData)
-                                            .addOnSuccessListener(aVoid -> {
-                                                Log.d("CadastroActivity", "Dados do usuário salvos com sucesso");
-                                                Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
-                                                snackbar.setBackgroundTint(Color.WHITE);
-                                                snackbar.setTextColor(Color.BLACK);
-                                                snackbar.show();
-                                            })
-                                            .addOnFailureListener(e -> {
-                                                Log.e("CadastroActivity", "Erro ao salvar dados do usuário", e);
-                                                Snackbar snackbar = Snackbar.make(v, "Erro ao salvar os dados do usuário", Snackbar.LENGTH_SHORT);
-                                                snackbar.setBackgroundTint(Color.WHITE);
-                                                snackbar.setTextColor(Color.BLACK);
-                                                snackbar.show();
-                                            });
-
-                                    sendNotification("Cadastro concluído", "Você foi registrado com sucesso!");
+                                    NotificationUtils notificationUtils = new NotificationUtils();
+                                    notificationUtils.sendNotification(this, "Cadastro concluído", "Você foi registrado com sucesso!");
                                     Intent intent = new Intent(Cadastro.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -210,29 +183,6 @@ public class Cadastro extends AppCompatActivity {
         findViewById(R.id.info_icon).setOnClickListener(v -> showTooltip("Caso seja de RH digite um CNPJ, caso contrário, um CPF."));
         hideSystemUI();
 
-    }
-    private void sendNotification(String title, String message) {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // Configura o canal de notificação (para Android 8.0 e superior)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "default_channel_id";
-            CharSequence channelName = "Default Channel";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        // Cria a notificação
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default_channel_id")
-                .setSmallIcon(R.drawable.sias) // Ícone da notificação
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
-
-        // Exibe a notificação
-        notificationManager.notify(1, builder.build());
     }
 
     // ============================================== Validacoes de cnpj e cpf =====================================

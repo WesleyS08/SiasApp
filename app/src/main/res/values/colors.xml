@@ -10,5 +10,5 @@
     <color name="cor_foco">#F07A26</color>
     <color name="cor_texto">#212121</color>
     <color name="error_color">#FF0000</color>
-    <color name="color_green">#00FF00</color>
+    <color name="primaryColor">#4285F4</color>
 </resources>
