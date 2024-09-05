@@ -20,10 +20,11 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".mander.Cadastro"
-            android:exported="false" />
-        <activity
-            android:name=".mander.Login"
+    android:name=".mander.Cadastro"
+    android:windowSoftInputMode="adjustResize"
+    android:exported="false" />
+<activity
+    android:name=".mander.Login"
             android:exported="false" />
         <activity android:name=".Onboarding.OnboardingActivity" />
         <activity

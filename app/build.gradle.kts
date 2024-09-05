@@ -36,6 +36,13 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.ui:ui:1.7.0")
+    implementation("androidx.compose.material:material:1.7.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.7.0")
+    implementation("androidx.activity:activity-compose:1.7.0")
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
+    implementation("com.github.shobhitpuri:custom-google-signin-button:2.0.0")
+
     implementation("androidx.appcompat:appcompat:1.3.0-beta01")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation ("com.google.android.gms:play-services-auth:21.2.0")
@@ -50,6 +57,8 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.volley)
     implementation(libs.firebase.firestore)
+    implementation(libs.core.ktx)
+    implementation(libs.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
