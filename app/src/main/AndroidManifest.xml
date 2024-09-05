@@ -20,7 +20,8 @@
             android:exported="false" />
         <activity
             android:name=".mander.Cadastro"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".mander.Login"
             android:exported="false" />

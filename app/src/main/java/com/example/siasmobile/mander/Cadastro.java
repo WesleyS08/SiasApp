@@ -14,9 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.siasmobile.Notificacao.NotificationUtils;
-import com.example.siasmobile.MainActivity;
 import com.example.siasmobile.R;
+import com.example.siasmobile.bancodedados.Supabase;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,9 +26,12 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.messaging.FirebaseMessaging;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 public class Cadastro extends AppCompatActivity {
@@ -38,7 +42,7 @@ public class Cadastro extends AppCompatActivity {
     private View tooltipView;
     private TextView termosTextView;
 
-
+    private Supabase supabaseService;
 
     // Mensagens de erros usadas em parte dos codigos
     String[] mensagens = { "Preencha todos os Campos!!", "Cadastro realizado com sucesso!", "Falha ao criar a conta",
@@ -50,7 +54,7 @@ public class Cadastro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseFirestore banco = FirebaseFirestore.getInstance();
+        supabaseService = new Supabase(this);
 
         // "Variáveis" do código
         TextInputLayout nomeLayout = findViewById(R.id.input_nome);
@@ -95,6 +99,10 @@ public class Cadastro extends AppCompatActivity {
                 return;
             }
             // Verifica a quantidade de caracteres do identificadorTexto
+            // Definir a variável tipoIdentificador fora das instruções if
+            String tipoIdentificador = null;
+
+// Obter o comprimento do identificador
             int length = identificadorTexto.length();
             if (length == 11) {
                 // Código para identificador com 11 caracteres (CPF)
@@ -102,7 +110,8 @@ public class Cadastro extends AppCompatActivity {
 
                 if (isValidCPF(identificadorTexto)) {
                     Log.d("CadastroActivity", "CPF válido");
-                    // Continue com o fluxo do cadastro
+                    // Atribuir o tipoIdentificador
+                    tipoIdentificador = "CPF";
                 } else {
                     Log.d("CadastroActivity", "CPF inválido");
                     Snackbar snackbar = Snackbar.make(v, mensagens[4], Snackbar.LENGTH_SHORT);
@@ -118,7 +127,8 @@ public class Cadastro extends AppCompatActivity {
 
                 if (isValidCNPJ(identificadorTexto)) {
                     Log.d("CadastroActivity", "CNPJ válido");
-                    // Continue com o fluxo do cadastro
+                    // Atribuir o tipoIdentificador
+                    tipoIdentificador = "CNPJ";
                 } else {
                     Log.d("CadastroActivity", "CNPJ inválido");
                     Snackbar snackbar = Snackbar.make(v, mensagens[5], Snackbar.LENGTH_SHORT);
@@ -128,10 +138,13 @@ public class Cadastro extends AppCompatActivity {
                     return;
                 }
             } else {
-                Snackbar snackbar = Snackbar.make(v, "Número de caracteres inválido", Snackbar.LENGTH_SHORT);
-                snackbar.setBackgroundTint(Color.RED);
-                snackbar.setTextColor(Color.WHITE);
+                // Caso o comprimento do identificador não seja 11 ou 14
+                Log.d("CadastroActivity", "Comprimento do identificador inválido");
+                Snackbar snackbar = Snackbar.make(v, "Identificador inválido", Snackbar.LENGTH_SHORT);
+                snackbar.setBackgroundTint(Color.WHITE);
+                snackbar.setTextColor(Color.BLACK);
                 snackbar.show();
+                return;
             }
 
             if (senha.equals(confSenha)) {
@@ -142,10 +155,42 @@ public class Cadastro extends AppCompatActivity {
                                 if (user != null) {
                                     sendEmailVerification(user);
 
+                                    // Declare and initialize jsonBody outside of the if-else blocks
+                                    String jsonBody;
+
+                                    if (length == 11) {
+                                        // Código para identificador com 11 caracteres (CPF)
+                                        jsonBody = "{ \"nome\": \"" + nome + "\", \"email\": \"" + email + "\", \"identificador\": \"" + identificadorTexto + "\", \"tipo_identificador\": \"CPF\" }";
+                                    } else if (length == 14) {
+                                        // Código para identificador com 14 caracteres (CNPJ)
+                                        jsonBody = "{ \"nome\": \"" + nome + "\", \"email\": \"" + email + "\", \"identificador\": \"" + identificadorTexto + "\", \"tipo_identificador\": \"CNPJ\" }";
+                                    } else {
+                                        // Caso o identificador não tenha nem 11 nem 14 caracteres
+                                        Log.e("CadastroActivity", "Identificador deve ter 11 (CPF) ou 14 (CNPJ) caracteres.");
+                                        return; // Saia do método ou execute algum tratamento de erro
+                                    }
+
+                                    // Após definir o jsonBody, faça a requisição ao Supabase
+                                    Supabase supabaseService = new Supabase(this);
+                                    supabaseService.insertUserData("usuarios", jsonBody, new Callback() {
+                                        @Override
+                                        public void onFailure(Call call, IOException e) {
+                                            Log.e("CadastroActivity", "Erro ao inserir dados no Supabase: " + e.getMessage());
+                                        }
+
+                                        @Override
+                                        public void onResponse(Call call, Response response) throws IOException {
+                                            if (response.isSuccessful()) {
+                                                Log.d("CadastroActivity", "Dados inseridos com sucesso: " + response.body().string());
+                                            } else {
+                                                Log.e("CadastroActivity", "Erro ao inserir dados: " + response.code() + " - " + response.body().string());
+                                            }
+                                        }
+                                    });
                                     // Salva os dados do usuário no Firestore
                                     NotificationUtils notificationUtils = new NotificationUtils();
                                     notificationUtils.sendNotification(this, "Cadastro concluído", "Você foi registrado com sucesso!");
-                                    Intent intent = new Intent(Cadastro.this, MainActivity.class);
+                                    Intent intent = new Intent(Cadastro.this, Login.class);
                                     startActivity(intent);
                                     finish();
                                 }
