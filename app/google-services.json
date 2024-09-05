@@ -12,7 +12,20 @@
           "package_name": "com.example.siasmobile"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "871110692356-cgvesd5s2l0gdc9r6uie182o44acstog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.siasmobile",
+            "certificate_hash": "71e01a0514d94a48724fbf925cbbd3b1943fa23a"
+          }
+        },
+        {
+          "client_id": "871110692356-m1qfbnii5v0koat811i5qusc9034apln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBcijc_gY5EUZrixA1etx-cJoaqvHh4YWc"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871110692356-m1qfbnii5v0koat811i5qusc9034apln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

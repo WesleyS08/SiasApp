@@ -9,6 +9,8 @@
     <string name="TituloOnboarding3"> Bot para as principais dúvidas </string>
     <string name="DescricaoOnboarding3"> Tire suas principais dúvidas de forma fácil e rápida com o bot exclusivo para isso.</string>
     <string name="inicio">Continuar</string>
+    <string name="default_web_client_id">AIzaSyBcijc_gY5EUZrixA1etx-cJoaqvHh4YWc</string>
+    <string name="google_sign_up">Continuar com o Google</string>
 
 
     <!--=======================================Parte de textos do Login=========================================================-->

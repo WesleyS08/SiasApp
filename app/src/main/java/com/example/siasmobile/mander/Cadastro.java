@@ -1,6 +1,5 @@
 package com.example.siasmobile.mander;
 
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,27 +11,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.siasmobile.Notificacao.NotificationUtils;
 import com.example.siasmobile.R;
 import com.example.siasmobile.bancodedados.Supabase;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
 
 public class Cadastro extends AppCompatActivity {
 
@@ -41,22 +49,37 @@ public class Cadastro extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private View tooltipView;
     private TextView termosTextView;
-
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
     private Supabase supabaseService;
 
-    // Mensagens de erros usadas em parte dos codigos
+    // Mensagens de erros usadas em parte dos códigos
     String[] mensagens = { "Preencha todos os Campos!!", "Cadastro realizado com sucesso!", "Falha ao criar a conta",
-            "As senhas devem ser iguais", "CPF Invalido", "CNPJ Invalido" };
-
+            "As senhas devem ser iguais", "CPF Inválido", "CNPJ Inválido" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
         mAuth = FirebaseAuth.getInstance();
         supabaseService = new Supabase(this);
 
-        // "Variáveis" do código
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        findViewById(R.id.cadastro_google).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signInWithGoogle();
+            }
+        });
+
+        // Variáveis do código
         TextInputLayout nomeLayout = findViewById(R.id.input_nome);
         TextInputLayout emailLayout = findViewById(R.id.input_email);
         TextInputLayout senhaLayout = findViewById(R.id.input_senha);
@@ -98,11 +121,9 @@ public class Cadastro extends AppCompatActivity {
                 snackbar.show();
                 return;
             }
-            // Verifica a quantidade de caracteres do identificadorTexto
-            // Definir a variável tipoIdentificador fora das instruções if
-            String tipoIdentificador = null;
 
-// Obter o comprimento do identificador
+            // Verifica a quantidade de caracteres do identificadorTexto
+            String tipoIdentificador = null;
             int length = identificadorTexto.length();
             if (length == 11) {
                 // Código para identificador com 11 caracteres (CPF)
@@ -110,7 +131,6 @@ public class Cadastro extends AppCompatActivity {
 
                 if (isValidCPF(identificadorTexto)) {
                     Log.d("CadastroActivity", "CPF válido");
-                    // Atribuir o tipoIdentificador
                     tipoIdentificador = "CPF";
                 } else {
                     Log.d("CadastroActivity", "CPF inválido");
@@ -127,7 +147,6 @@ public class Cadastro extends AppCompatActivity {
 
                 if (isValidCNPJ(identificadorTexto)) {
                     Log.d("CadastroActivity", "CNPJ válido");
-                    // Atribuir o tipoIdentificador
                     tipoIdentificador = "CNPJ";
                 } else {
                     Log.d("CadastroActivity", "CNPJ inválido");
@@ -138,7 +157,6 @@ public class Cadastro extends AppCompatActivity {
                     return;
                 }
             } else {
-                // Caso o comprimento do identificador não seja 11 ou 14
                 Log.d("CadastroActivity", "Comprimento do identificador inválido");
                 Snackbar snackbar = Snackbar.make(v, "Identificador inválido", Snackbar.LENGTH_SHORT);
                 snackbar.setBackgroundTint(Color.WHITE);
@@ -155,23 +173,16 @@ public class Cadastro extends AppCompatActivity {
                                 if (user != null) {
                                     sendEmailVerification(user);
 
-                                    // Declare and initialize jsonBody outside of the if-else blocks
                                     String jsonBody;
-
                                     if (length == 11) {
-                                        // Código para identificador com 11 caracteres (CPF)
                                         jsonBody = "{ \"nome\": \"" + nome + "\", \"email\": \"" + email + "\", \"identificador\": \"" + identificadorTexto + "\", \"tipo_identificador\": \"CPF\" }";
                                     } else if (length == 14) {
-                                        // Código para identificador com 14 caracteres (CNPJ)
                                         jsonBody = "{ \"nome\": \"" + nome + "\", \"email\": \"" + email + "\", \"identificador\": \"" + identificadorTexto + "\", \"tipo_identificador\": \"CNPJ\" }";
                                     } else {
-                                        // Caso o identificador não tenha nem 11 nem 14 caracteres
                                         Log.e("CadastroActivity", "Identificador deve ter 11 (CPF) ou 14 (CNPJ) caracteres.");
-                                        return; // Saia do método ou execute algum tratamento de erro
+                                        return;
                                     }
 
-                                    // Após definir o jsonBody, faça a requisição ao Supabase
-                                    Supabase supabaseService = new Supabase(this);
                                     supabaseService.insertUserData("usuarios", jsonBody, new Callback() {
                                         @Override
                                         public void onFailure(Call call, IOException e) {
@@ -187,7 +198,7 @@ public class Cadastro extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                    // Salva os dados do usuário no Firestore
+
                                     NotificationUtils notificationUtils = new NotificationUtils();
                                     notificationUtils.sendNotification(this, "Cadastro concluído", "Você foi registrado com sucesso!");
                                     Intent intent = new Intent(Cadastro.this, Login.class);
@@ -222,16 +233,91 @@ public class Cadastro extends AppCompatActivity {
                 snackbar.setBackgroundTint(Color.WHITE);
                 snackbar.setTextColor(Color.BLACK);
                 snackbar.show();
-                Log.d("CadastroActivity", "Senhas não coincidem");
             }
         });
-        findViewById(R.id.info_icon).setOnClickListener(v -> showTooltip("Caso seja de RH digite um CNPJ, caso contrário, um CPF."));
-        hideSystemUI();
-
     }
 
-    // ============================================== Validacoes de cnpj e cpf =====================================
-    // Função para validar CPF
+    private void showTermsDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Termos de Uso")
+                .setMessage("Aqui você pode adicionar os termos de uso...")
+                .setPositiveButton("OK", null)
+                .show();
+    }
+
+    private void sendEmailVerification(FirebaseUser user) {
+        user.sendEmailVerification()
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("CadastroActivity", "Email de verificação enviado.");
+                    } else {
+                        Log.e("CadastroActivity", "Falha ao enviar email de verificação: " + task.getException());
+                    }
+                });
+    }
+
+    private void signInWithGoogle() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                Log.w("CadastroActivity", "Google sign in failed", e);
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            String nome = user.getDisplayName();
+                            String email = user.getEmail();
+                            String uid = user.getUid();
+
+                            String jsonBody = "{ \"nome\": \"" + nome + "\", \"email\": \"" + email + "\", \"identificador\": \"" + uid + "\", \"tipo_identificador\": \"Google\" }";
+
+                            supabaseService.insertUserData("usuarios", jsonBody, new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    Log.e("CadastroActivity", "Erro ao inserir dados no Supabase: " + e.getMessage());
+                                }
+
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    if (response.isSuccessful()) {
+                                        Log.d("CadastroActivity", "Dados inseridos com sucesso: " + response.body().string());
+                                    } else {
+                                        Log.e("CadastroActivity", "Erro ao inserir dados: " + response.code() + " - " + response.body().string());
+                                    }
+                                }
+                            });
+
+                            NotificationUtils notificationUtils = new NotificationUtils();
+                            notificationUtils.sendNotification(this, "Cadastro concluído", "Você foi registrado com sucesso!");
+                            Intent intent = new Intent(Cadastro.this, Login.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } else {
+                        Log.w("CadastroActivity", "signInWithCredential:failure", task.getException());
+                        Toast.makeText(Cadastro.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     private boolean isValidCPF(String cpf) {
         cpf = cpf.replaceAll("\\D", "");
 
@@ -261,7 +347,8 @@ public class Cadastro extends AppCompatActivity {
 
         return cpf.charAt(9) == firstDigit + '0' && cpf.charAt(10) == secondDigit + '0';
     }
-    // Função para validar CNPJ
+
+
     private boolean isValidCNPJ(String cnpj) {
         cnpj = cnpj.replaceAll("\\D", ""); // Remove caracteres não numéricos
 
@@ -285,61 +372,6 @@ public class Cadastro extends AppCompatActivity {
         int digit2 = (sum % 11) < 2 ? 0 : 11 - (sum % 11);
 
         return cnpj.charAt(12) == digit1 + '0' && cnpj.charAt(13) == digit2 + '0';
-    }
-
-    // ============================================== Configuração de avisos para o user =====================================
-
-    // explicacao do "indetificador"
-    private void showTooltip(String message) {
-        if (tooltipView == null) {
-            tooltipView = LayoutInflater.from(this).inflate(R.layout.tooltip_layout, null);
-        }
-        TextView tooltipText = tooltipView.findViewById(R.id.tooltip_text);
-        if (tooltipText != null) {
-            tooltipText.setText(message);
-        } else {
-        }
-        Toast toast = new Toast(getApplicationContext());
-        toast.setView(tooltipView);
-        toast.setGravity(Gravity.TOP | Gravity.START, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.show();
-    }
-
-    // Alert Dialog do termo
-    private void showTermsDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Termos e Condições")
-                .setMessage("Aqui estão os termos e condições muito bem escritos...")
-                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
-                .show();
-    }
-
-    private void sendEmailVerification(FirebaseUser user) {
-        user.sendEmailVerification()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d("CadastroActivity", "E-mail de verificação enviado para " + user.getEmail());
-                        Toast.makeText(Cadastro.this, "E-mail de verificação enviado. Verifique seu e-mail.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.e("CadastroActivity", "Falha ao enviar o e-mail de verificação.", task.getException());
-                        Toast.makeText(Cadastro.this, "Falha ao enviar e-mail de verificação.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    // ============================================================================================================================
-
-    // ============================================== Interface do dispositivo =====================================
-    private void hideSystemUI() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        Log.d("CadastroActivity", "UI do sistema escondida");
     }
 
 }
