@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation("androidx.appcompat:appcompat:1.3.0-beta01")
+    implementation("androidx.cardview:cardview:1.0.0")
     implementation ("com.google.android.gms:play-services-auth:21.2.0")
     implementation ("com.google.firebase:firebase-messaging:23.1.0")
     implementation(libs.appcompat)
