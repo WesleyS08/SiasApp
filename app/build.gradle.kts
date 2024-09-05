@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
-    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -34,9 +33,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
@@ -51,7 +47,6 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation ("com.google.android.gms:play-services-auth:21.2.0")
     implementation ("com.google.firebase:firebase-messaging:23.1.0")
-    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
