@@ -11,6 +11,8 @@
     <string name="inicio">Continuar</string>
     <string name="default_web_client_id">AIzaSyBcijc_gY5EUZrixA1etx-cJoaqvHh4YWc</string>
     <string name="google_sign_up">Continuar com o Google</string>
+    <string name="supabase_url">https://enpcrnmsdcjekxmkrlaf.supabase.co</string>
+    <string name="supabase_public_key">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVucGNybm1zZGNqZWt4bWtybGFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0NDY5NzEsImV4cCI6MjA0MTAyMjk3MX0.BInW3v-YBtlK1OrG9W0uR1qtLEOcEEP7G_I8NpYotyA</string>
 
 
     <!--=======================================Parte de textos do Login=========================================================-->

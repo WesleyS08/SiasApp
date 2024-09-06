@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -12,7 +13,7 @@ android {
         minSdk = 28
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,6 +34,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -42,11 +46,13 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.7.0")
     implementation("com.google.android.gms:play-services-auth:20.5.0")
     implementation("com.github.shobhitpuri:custom-google-signin-button:2.0.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
 
     implementation("androidx.appcompat:appcompat:1.3.0-beta01")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation ("com.google.android.gms:play-services-auth:21.2.0")
     implementation ("com.google.firebase:firebase-messaging:23.1.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
