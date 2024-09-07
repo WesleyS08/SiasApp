@@ -139,6 +139,7 @@
 
             <!-- Email -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -149,6 +150,7 @@
                 app:hintTextColor="@color/cor_foco">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_person"
@@ -203,7 +205,8 @@
                 android:textStyle="bold" />
 
             <!-- Botão Login -->
-            <TextView
+            <!-- Troca de TextView para Button para ter a ação -->
+            <Button
                 android:id="@+id/Login"
                 android:layout_width="276dp"
                 android:layout_height="wrap_content"
