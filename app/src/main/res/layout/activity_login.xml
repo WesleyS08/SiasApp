@@ -150,7 +150,6 @@
                 app:hintTextColor="@color/cor_foco">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_person"
