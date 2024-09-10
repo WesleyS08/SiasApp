@@ -1,6 +1,7 @@
 package com.example.siasmobile.mander;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -252,6 +253,47 @@ public class Cadastro extends AppCompatActivity {
     }
 
     private void signInWithGoogle() {
+        // Exibe o diálogo para obter informações adicionais
+        showAdditionalInfoDialog();
+    }
+
+    private void showAdditionalInfoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Informações Adicionais");
+
+        // Inflate o layout do diálogo
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_additional_info, null);
+        builder.setView(dialogView);
+
+        final EditText cpfCnpjInput = dialogView.findViewById(R.id.cpf_cnpj_input);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String cpfCnpj = cpfCnpjInput.getText().toString().trim();
+            if (isValidCPF(cpfCnpj) || isValidCNPJ(cpfCnpj)) {
+                String tipo = isValidCPF(cpfCnpj) ? "CPF" : "CNPJ";
+                // Salvar essas informações e iniciar o login com o Google
+                initiateGoogleSignIn(cpfCnpj, tipo);
+            } else {
+                Toast.makeText(Cadastro.this, "CPF ou CNPJ inválido!", Toast.LENGTH_SHORT).show();
+                // Não reexibir o diálogo, apenas exiba a mensagem de erro
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        builder.create().show();
+    }
+
+    private void initiateGoogleSignIn(String cpfCnpj, String tipo) {
+        // Salvar informações adicionais no SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("cpf_cnpj", cpfCnpj);
+        editor.putString("tipo", tipo);
+        editor.apply();
+
+        // Iniciar o processo de login com o Google
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -282,7 +324,13 @@ public class Cadastro extends AppCompatActivity {
                             String email = user.getEmail();
                             String uid = user.getUid();
 
-                            String jsonBody = "{ \"nome\": \"" + nome + "\", \"email\": \"" + email + "\", \"identificador\": \"" + uid + "\", \"tipo_identificador\": \"Google\" }";
+                            // Recuperar informações adicionais
+                            SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                            String cpfCnpj = sharedPreferences.getString("cpf_cnpj", "");
+                            String tipo = sharedPreferences.getString("tipo", "");
+
+                            // Ajustar jsonBody para refletir a estrutura da tabela
+                            String jsonBody = "{ \"nome\": \"" + nome + "\", \"email\": \"" + email + "\", \"identificador\": \"" + cpfCnpj + "\", \"tipo_identificador\": \"" + tipo + "\" }";
 
                             supabaseService.insertUserData("usuarios", jsonBody, new Callback() {
                                 @Override
@@ -343,7 +391,6 @@ public class Cadastro extends AppCompatActivity {
         return cpf.charAt(9) == firstDigit + '0' && cpf.charAt(10) == secondDigit + '0';
     }
 
-
     private boolean isValidCNPJ(String cnpj) {
         cnpj = cnpj.replaceAll("\\D", ""); // Remove caracteres não numéricos
 
@@ -368,5 +415,4 @@ public class Cadastro extends AppCompatActivity {
 
         return cnpj.charAt(12) == digit1 + '0' && cnpj.charAt(13) == digit2 + '0';
     }
-
 }
