@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SiasMobile"
         tools:targetApi="31">
         <activity
+            android:name=".Outro_Perfil"
+            android:exported="false" />
+        <activity
             android:name=".chat"
             android:exported="false" />
         <activity
