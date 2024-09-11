@@ -16,15 +16,18 @@
         android:theme="@style/Theme.SiasMobile"
         tools:targetApi="31">
         <activity
+            android:name=".chat"
+            android:exported="false" />
+        <activity
             android:name=".Navigation"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
-    android:name=".mander.Cadastro"
-    android:windowSoftInputMode="adjustResize"
-    android:exported="false" />
-<activity
-    android:name=".mander.Login"
+            android:name=".mander.Cadastro"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".mander.Login"
             android:exported="false" />
         <activity android:name=".Onboarding.OnboardingActivity" />
         <activity
